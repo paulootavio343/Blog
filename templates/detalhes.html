@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ post.title }}{% endblock %}
+
+{% block author %}{{ post.user.first_name }}{% endblock %}
+{% block excerto %}{{ post.excerpt }}{% endblock %}
+{% block keywords %}{{ post.keywords }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- POST -->
+            <div class="row pt-5">
+                <div class="col-xl"></div>
+                <div class="col-xl-8 text-center">
+                    <h2>{{ post.title }}</h2>
+                    <h5>
+                        {{ post.excerpt|safe }}
+                    </h5>
+                    <p class="text-muted mt-4">
+                        <small>
+                            {{ post.user.first_name }} | Publicado em {{ post.publication_date }} | {{ post.post_category }}<br>
+                        </small>
+                        <small>
+                            Atualizado em {{ post.update_date }}
+                        </small>
+                    </p>
+                </div>
+                <div class="col-xl"></div>
+            </div>
+
+            <div class="row pt-5">
+                <div class="col-xl"></div>
+                <div class="col-xl-8">
+
+                    {% if post.image %}
+                        <img class="img-fluid mb-5 rounded" src="{{ post.image.url }}" alt="">
+                    {% endif %}
+
+                    <p>
+                        {{ post.content|safe }}
+                    </p>
+
+                </div>
+                <div class="col-xl"></div>
+            </div>
+
+            <div class="row pt-5">
+                <div class="col-xl"></div>
+                <div class="col-xl-8">
+                    <h2 class="my-3">Comentários ({{ comments|length }})</h2>
+
+                    {% for comment in comments %}
+                    <div class="border-start border-dark border-3 ps-4">
+                        <small class="d-block mt-5">{{ comment.comment_created }}</small>
+                        <h5 class="mb-2">{{ comment.name }} disse:</h5>
+                        <small class="d-block text-muted text-break">
+                            {{ comment.comment_title }}
+                        </small>
+                        <p class="mb-1 text-break">
+                            {{ comment.message }}
+                        </p>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="col-xl"></div>
+            </div>
+
+            <div class="row pt-5">
+                <div class="col-xl"></div>
+                <div class="col-xl-8">
+                    <h2 class="my-3">Deixe um comentário</h2>
+
+                    <form method="POST" action="#send-comment">
+                        {% csrf_token %}
+
+                        {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field }}
+                        {% endfor %}
+                        
+                        <div class="my-4">
+                            {% for visible_field in form.visible_fields %}
+                            <div class="form-group">
+                                {{ visible_field.label_tag }} <br>
+                                {{ visible_field }}
+                                {{ visible_field.errors }}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <script src='https://www.google.com/recaptcha/api.js'></script>
+                        <div class="g-recaptcha" data-sitekey="6Ld0cmwdAAAAAK6DKiLDckHcFWLtmnVeZ17EetSL"></div>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{ message.tags }} mt-4" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <input id="send-comment" type="submit" class="d-block btn btn-primary mx-auto my-4 fs-4"
+                            value="Enviar">
+                    </form>
+
+                </div>
+                <div class="col-xl"></div>
+            </div>
+
+            <!-- POST -->
+        </div>
+    </div>
+</div>
+{% endblock %}

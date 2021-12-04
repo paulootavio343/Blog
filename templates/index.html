@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home Page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-lg-4">
+            <!-- CONTENT -->
+            <div class="card-columns mt-4">
+
+                <div class="card">
+
+                    <a href="{% url 'posts:details' post.id post.slug %}">
+                        {% if post.image %}
+                            <img class="card-img-top rounded-bottom" src="{{ post.image.url }}" alt="">
+                        {% endif %}
+                    </a>
+
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="{% url 'posts:details' post.id post.slug %}" class="text-dark text-decoration-none">{{ post.title }}</a>
+                        </h4>
+                        <p class="card-text">
+                            {{ post.excerpt|safe }}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                {{ post.publication_date }}
+                                |
+                                {% if post.comments_numbers == 0 %}
+                                    Nenhum comentário
+                                {% elif post.comments_numbers == 1 %}
+                                    {{ post.comments_numbers }} comentário
+                                {% else %}
+                                    {{ post.comments_numbers }} comentários
+                                {% endif %}
+                                |
+                                {{ post.post_category }}
+                            </small>
+                        </p>
+
+                        <div class="text-right">
+                            <a href="{% url 'posts:details' post.pk post.slug %}" class="btn btn-outline-secondary">Ler
+                                mais...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/CONTENT-->
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <div class="pagination">
+        <ul class="pagination my-4">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+            </li>
+            {% endif %}
+    
+            {% for num in page_obj.paginator.page_range %}
+    
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endif %}
+    
+            {% endfor %}
+    
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&rsaquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
