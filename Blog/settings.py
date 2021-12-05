@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants
-from .secret_key import your_secret_key, database_password, recaptcha_secret_key
-from .email import email, password
+from .secret_keys import django_secret_key, database_password, recaptcha_secret_key
+from .secret_keys import email_host_user, email_host_password
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = your_secret_key()
+SECRET_KEY = django_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,9 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'posts',
-    'comments',
-    'category',
+    'blog_content',
     'django_summernote',
 ]
 
@@ -69,7 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'category.custom_context_processor.subject_renderer',
+                'blog_content.custom_context_processor.subject_renderer',
             ],
         },
     },
@@ -96,6 +94,7 @@ DATABASES = {
         }
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -155,7 +154,7 @@ MESSAGE_TAGS = {
 }
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-SUMMERNOTE_THEME = 'bs5'
+SUMMERNOTE_THEME = 'bs4'
 
 GOOGLE_RECAPTCHA_SECRET_KEY = recaptcha_secret_key()
 
@@ -163,5 +162,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = email()
-EMAIL_HOST_PASSWORD = password()
+EMAIL_HOST_USER = email_host_user()
+EMAIL_HOST_PASSWORD = email_host_password()

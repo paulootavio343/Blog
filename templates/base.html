@@ -27,7 +27,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-2 border-primary sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'posts:index' %}">
+            <a class="navbar-brand" href="{% url 'blog_content:index' %}">
                 <img src="{% static 'img/bootstrap-logo.svg' %}" alt="" width="30" height="24"
                     class="d-inline-block align-text-top">
                 Blog do Paulo
@@ -40,7 +40,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'posts:index' %}">Início</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'blog_content:index' %}">Início</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -49,12 +49,12 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for category in categories %}
-                            <li><a class="dropdown-item" href="{% url 'posts:category' category.category_slug %}">{{ category.category_name }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'blog_content:category' category.category_slug %}">{{ category.category_name }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" action="{% url 'posts:search' %}">
+                <form class="d-flex" action="{% url 'blog_content:search' %}">
                     {% csrf_token %}
 
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="termo" value="{{ request.GET.termo }}">

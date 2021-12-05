@@ -1,11 +1,31 @@
 from django.db import models
 from django.utils.text import slugify
-from category.models import Category
 import os
 from PIL import Image
 from Blog import settings
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
+
+class Category(models.Model):
+    category_name = models.CharField(
+        max_length=64, unique=True, verbose_name='Nome')
+    category_slug = models.SlugField(
+        blank=True, null=True, unique=True, verbose_name='Slug')
+
+    def __str__(self):
+        return self.category_name
+
+    def save(self, *args, **kwargs):
+        if not self.category_slug:
+            new_slug = slugify(self.category_name)
+            self.category_slug = new_slug
+
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
 
 
 class Posts(models.Model):
@@ -22,7 +42,7 @@ class Posts(models.Model):
         max_length=255, blank=False, null=False, verbose_name='Excerto'
     )
     keywords = models.CharField(
-        max_length=255, blank=False, null=False, default='Blog, Django, Bootstrap', verbose_name='Palavras chave'
+        max_length=255, blank=False, null=False, verbose_name='Palavras chave'
     )
     slug = models.SlugField(blank=True, null=True)
     content = models.TextField(
@@ -43,14 +63,14 @@ class Posts(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            new_slug = slugify(self.title)
+            self.slug = new_slug
+
         super().save(*args, **kwargs)
 
         if self.image:
             self.resize_image(self.image.name, 800)
-
-        if not self.slug:
-            new_slug = slugify(self.title)
-            self.slug = new_slug
 
     @staticmethod
     def resize_image(img_name, new_width):
@@ -74,3 +94,37 @@ class Posts(models.Model):
     class Meta:
         verbose_name = 'Postagem'
         verbose_name_plural = 'Postagens'
+
+
+class Comentaries(models.Model):
+    post_comment = models.ForeignKey(
+        Posts, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Post'
+    )
+    name = models.CharField(
+        max_length=64, blank=False, null=False, verbose_name='Nome'
+    )
+    email = models.EmailField(
+        max_length=64, blank=False, null=False, verbose_name='E-mail'
+    )
+    comment_title = models.CharField(
+        max_length=255, blank=False, null=False, verbose_name='Título'
+    )
+    message = models.TextField(
+        blank=False, null=False, verbose_name='Comentário'
+    )
+    comment_published = models.BooleanField(
+        default=False, verbose_name='Publicado'
+    )
+    comment_created = models.DateTimeField(
+        auto_now_add=True, verbose_name='Publicação'
+    )
+    comment_updated = models.DateTimeField(
+        auto_now=True, verbose_name='Atualização'
+    )
+
+    def __str__(self):
+        return self.message
+
+    class Meta:
+        verbose_name = 'Comentário'
+        verbose_name_plural = 'Comentários'

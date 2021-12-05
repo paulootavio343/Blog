@@ -13,7 +13,7 @@
 
                 <div class="card">
 
-                    <a href="{% url 'posts:details' post.id post.slug %}">
+                    <a href="{% url 'blog_content:details' post.id post.slug %}">
                         {% if post.image %}
                             <img class="card-img-top rounded-bottom" src="{{ post.image.url }}" alt="">
                         {% endif %}
@@ -21,7 +21,7 @@
 
                     <div class="card-body">
                         <h4 class="card-title">
-                            <a href="{% url 'posts:details' post.id post.slug %}" class="text-dark text-decoration-none">{{ post.title }}</a>
+                            <a href="{% url 'blog_content:details' post.id post.slug %}" class="text-dark text-decoration-none">{{ post.title }}</a>
                         </h4>
                         <p class="card-text">
                             {{ post.excerpt|safe }}
@@ -43,7 +43,7 @@
                         </p>
 
                         <div class="text-right">
-                            <a href="{% url 'posts:details' post.pk post.slug %}" class="btn btn-outline-secondary">Ler
+                            <a href="{% url 'blog_content:details' post.pk post.slug %}" class="btn btn-outline-secondary">Ler
                                 mais...</a>
                         </div>
                     </div>

@@ -2,12 +2,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView
-from .models import Posts
-from category.models import Category
-from comments.models import Comentaries
+from .models import Posts, Category, Comentaries
+from .forms import FormComentario
 from django.db.models import Q, Count, Case, When
-from comments.forms import FormComentario
-from comments.models import Comentaries
 import requests
 from Blog import settings
 
@@ -71,12 +68,12 @@ class PostDetail(UpdateView):
         if not recaptcha_result.get('success'):
             messages.error(
                 self.request, 'Confirme que você não é um robô clicando no reCaptcha.')
-            return redirect('posts:details', pk=post.pk, slug=post.slug)
+            return redirect('blog_content:details', pk=post.pk, slug=post.slug)
 
         comentario.save()
         messages.success(
             self.request, 'Comentário enviado para revisão com sucesso.')
-        return redirect('posts:details', pk=post.pk, slug=post.slug)
+        return redirect('blog_content:details', pk=post.pk, slug=post.slug)
 
 
 class PostCategory(PostIndex):
@@ -112,6 +109,8 @@ class PostSearch(PostIndex):
             Q(slug__icontains=termo) |
             Q(user__first_name__iexact=termo) |
             Q(content__icontains=termo) |
+            Q(excerpt__icontains=termo) |
+            Q(keywords__icontains=termo) |
             Q(post_category__category_name__icontains=termo) |
             Q(post_category__category_slug__icontains=termo) |
             Q(publication_date__icontains=termo) |

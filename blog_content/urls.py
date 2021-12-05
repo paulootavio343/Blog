@@ -1,7 +1,7 @@
 from django.urls import path
-from posts.views import PostCategory, PostDetail, PostIndex, PostSearch
+from blog_content.views import PostCategory, PostDetail, PostIndex, PostSearch
 
-app_name = 'posts'
+app_name = 'blog_content'
 
 urlpatterns = [
     path('', PostIndex.as_view(), name='index'),
