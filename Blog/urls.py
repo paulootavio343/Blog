@@ -15,14 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import url
 from django.conf.urls.static import static
 from Blog import settings
 
 urlpatterns = [
     path("", include('blog_content.urls')),
     path('admin/', admin.site.urls),
-    url('summernote/', include('django_summernote.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
 
 if settings.DEBUG:

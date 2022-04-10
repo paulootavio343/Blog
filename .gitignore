@@ -63,6 +63,7 @@ db.sqlite3-journal
 secret_keys.py
 media
 migrations
+get_secret_key.py
 
 # Flask stuff:
 instance/

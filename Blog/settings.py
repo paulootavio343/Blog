@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = django_secret_key()
+SECRET_KEY = django_secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.0.5']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.0.103']
 
 
 # Application definition
@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BlogDatabase',
         'USER': 'root',
-        'PASSWORD': database_password(),
+        'PASSWORD': database_password,
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -156,11 +156,11 @@ MESSAGE_TAGS = {
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SUMMERNOTE_THEME = 'bs4'
 
-GOOGLE_RECAPTCHA_SECRET_KEY = recaptcha_secret_key()
+GOOGLE_RECAPTCHA_SECRET_KEY = recaptcha_secret_key
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = email_host_user()
-EMAIL_HOST_PASSWORD = email_host_password()
+EMAIL_HOST_USER = email_host_user
+EMAIL_HOST_PASSWORD = email_host_password
