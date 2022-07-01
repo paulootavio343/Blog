@@ -1,96 +1,92 @@
-/* VARIABLE DEFINITIONS */
 :root {
-    /*
-    --dark-color: #212529;
-    --dark-hover-color: #3f4850;
-    --white-color: #fff;
-    --blue-color: #0d6efd;
-    */
     --primary: #3f4850;
     --secondary: #212529;
     --accent: #74a4ec;
     --primary-fg: #fff;
-  
+
     --body-fg: #333;
     --body-bg: #fff;
     --body-quiet-color: #666;
     --body-loud-color: #000;
-  
+
     --header-color: #9ccff8;
     --header-branding-color: var(--accent);
     --header-bg: var(--secondary);
     --header-link-color: var(--primary-fg);
-  
+
     --breadcrumbs-fg: #9ccff8;
     --breadcrumbs-link-fg: var(--body-bg);
     --breadcrumbs-bg: var(--primary);
-  
+
     --link-fg: var(--body-fg);
     --link-hover-color: var(--accent);
     --link-selected-fg: #5b80b2;
-  
+
     --hairline-color: #e8e8e8;
     --border-color: #ccc;
-  
+
     --error-fg: #ba2121;
-  
+
     --message-success-bg: #dfd;
     --message-warning-bg: #ffc;
     --message-error-bg: #ffefef;
-  
-    --darkened-bg: #f8f8f8; /* A bit darker than --body-bg */
-    --selected-bg: #e4e4e4; /* E.g. selected table cells */
+
+    --darkened-bg: #f8f8f8;
+    /* A bit darker than --body-bg */
+    --selected-bg: #e4e4e4;
+    /* E.g. selected table cells */
     --selected-row: #c3dbff;
-  
+
     --button-fg: #fff;
     --button-bg: var(--primary);
     --button-hover-bg: #609ab6;
     --default-button-bg: var(--secondary);
     --default-button-hover-bg: #4576c0;
-    --close-button-bg: #888; /* Previously #bbb, contrast 1.92 */
+    --close-button-bg: #888;
+    /* Previously #bbb, contrast 1.92 */
     --close-button-hover-bg: #747474;
     --delete-button-bg: #ba2121;
     --delete-button-hover-bg: #a41515;
-  
+
     --object-tools-fg: var(--button-fg);
     --object-tools-bg: var(--close-button-bg);
     --object-tools-hover-bg: var(--close-button-hover-bg);
 }
 
 #user-tools a:hover {
-  color: var(--accent);
+    color: var(--accent);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-      --primary: #3f4850;
-      --primary-fg: #eee;
-  
-      --body-fg: #eeeeee;
-      --body-bg: #121212;
-      --body-quiet-color: #ffffff;
-      --body-loud-color: #ffffff;
-  
-      --breadcrumbs-link-fg: #e0e0e0;
-      --breadcrumbs-bg: var(--primary);
-  
-      --link-fg: #ffffff;
-      --link-hover-color: var(--accent);
-      --link-selected-fg: #6f94c6;
-  
-      --hairline-color: #272727;
-      --border-color: #353535;
-  
-      --error-fg: #e35f5f;
-      --message-success-bg: #006b1b;
-      --message-warning-bg: #583305;
-      --message-error-bg: #570808;
-  
-      --darkened-bg: #212121;
-      --selected-bg: #1b1b1b;
-      --selected-row: #2c438b;
-  
-      --close-button-bg: #333333;
-      --close-button-hover-bg: #666666;
+        --primary: #3f4850;
+        --primary-fg: #eee;
+
+        --body-fg: #eeeeee;
+        --body-bg: #121212;
+        --body-quiet-color: #ffffff;
+        --body-loud-color: #ffffff;
+
+        --breadcrumbs-link-fg: #e0e0e0;
+        --breadcrumbs-bg: var(--primary);
+
+        --link-fg: #ffffff;
+        --link-hover-color: var(--accent);
+        --link-selected-fg: #6f94c6;
+
+        --hairline-color: #272727;
+        --border-color: #353535;
+
+        --error-fg: #e35f5f;
+        --message-success-bg: #006b1b;
+        --message-warning-bg: #583305;
+        --message-error-bg: #570808;
+
+        --darkened-bg: #212121;
+        --selected-bg: #1b1b1b;
+        --selected-row: #2c438b;
+
+        --close-button-bg: #333333;
+        --close-button-hover-bg: #666666;
     }
 }

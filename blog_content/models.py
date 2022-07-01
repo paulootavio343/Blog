@@ -9,9 +9,9 @@ User = get_user_model()
 
 class Category(models.Model):
     category_name = models.CharField(
-        max_length=64, unique=True, verbose_name='Nome')
+        max_length=64, unique=True, blank=False, verbose_name='Nome')
     category_slug = models.SlugField(
-        blank=True, null=True, unique=True, verbose_name='Slug')
+        max_length=128, blank=True, null=True, unique=True, verbose_name='Slug')
 
     def __str__(self):
         return self.category_name
@@ -44,7 +44,8 @@ class Posts(models.Model):
     keywords = models.CharField(
         max_length=255, blank=False, null=False, verbose_name='Palavras chave'
     )
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(
+        max_length=128, blank=True, null=True, verbose_name='Slug')
     content = models.TextField(
         blank=False, null=False, verbose_name='Conteúdo'
     )
@@ -87,7 +88,7 @@ class Posts(models.Model):
         new_img.save(
             img_path,
             optimize=True,
-            quality=60
+            quality=80
         )
         new_img.close()
 

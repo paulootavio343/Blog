@@ -11,7 +11,7 @@ from Blog import settings
 
 class PostIndex(ListView):
     template_name = 'index.html'
-    paginate_by = 6
+    paginate_by = 9
     model = Posts
     context_object_name = 'posts'
 
@@ -35,6 +35,11 @@ class PostDetail(UpdateView):
     form_class = FormComentario
     context_object_name = 'post'
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = Posts.objects.filter(published=True).order_by('-id')
+        return qs
+
     def get_context_data(self, **kwargs):
         contexto = super().get_context_data(**kwargs)
         post = self.get_object()
@@ -43,11 +48,6 @@ class PostDetail(UpdateView):
         contexto['comments'] = comentarios
 
         return contexto
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        qs = Posts.objects.filter(published=True).order_by('-id')
-        return qs
 
     def form_valid(self, form):
         post = self.get_object()
@@ -82,13 +82,13 @@ class PostCategory(PostIndex):
     def get_queryset(self):
         qs = super().get_queryset()
 
-        categoria = self.kwargs.get('category_slug', None)
-        categoria = Category.objects.get(category_slug=categoria)
+        category = self.kwargs.get('category_slug', None)
+        category = Category.objects.get(category_slug=category)
 
-        if not categoria:
+        if not category:
             return qs
 
-        qs = qs.filter(post_category=categoria.id,
+        qs = qs.filter(post_category=category.id,
                        published=True).order_by('-id')
 
         return qs
@@ -99,22 +99,22 @@ class PostSearch(PostIndex):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        termo = self.request.GET.get('termo')
+        search = self.request.GET.get('search')
 
-        if not termo:
+        if not search:
             return qs
 
         qs = qs.filter(
-            Q(title__icontains=termo) |
-            Q(slug__icontains=termo) |
-            Q(user__first_name__iexact=termo) |
-            Q(content__icontains=termo) |
-            Q(excerpt__icontains=termo) |
-            Q(keywords__icontains=termo) |
-            Q(post_category__category_name__icontains=termo) |
-            Q(post_category__category_slug__icontains=termo) |
-            Q(publication_date__icontains=termo) |
-            Q(update_date__icontains=termo)
+            Q(title__icontains=search) |
+            Q(slug__icontains=search) |
+            Q(user__first_name__iexact=search) |
+            Q(content__icontains=search) |
+            Q(excerpt__icontains=search) |
+            Q(keywords__icontains=search) |
+            Q(post_category__category_name__icontains=search) |
+            Q(post_category__category_slug__icontains=search) |
+            Q(publication_date__icontains=search) |
+            Q(update_date__icontains=search)
         ).order_by('-id')
 
         return qs
